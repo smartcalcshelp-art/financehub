@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Group Bill Split Calculator - No Ads | SmartCalcs</title>
+    <meta name="description" content="Split bills easily with friends, roommates, or family. Free online tool to divide expenses fairly. No login, no ads, works on mobile.">
+    <meta name="keywords" content="split bill calculator, expense split tool, group bill calculator, fair share calculator, SmartCalcs">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://smartcalcs.in/split-bill-calculator.html">
+    
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:title" content="Free Group Bill Split Calculator - No Ads | SmartCalcs">
+    <meta property="og:description" content="Split bills easily with friends, roommates, or family. Free online tool to divide expenses fairly.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://smartcalcs.in/split-bill-calculator.html">
+    <meta property="og:image" content="https://smartcalcs.in/assets/og-split-bill.jpg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Group Bill Split Calculator">
+    <meta name="twitter:description" content="Split bills fairly with friends and family. No login, no ads.">
+    <meta name="twitter:image" content="https://smartcalcs.in/assets/og-split-bill.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <!-- Preload Critical Assets -->
+    <link rel="preload" href="/css/style.css" as="style">
+    <link rel="preload" href="/js/analytics.js" as="script">
+
+    <!-- Google Analytics -->
+    <script src="/js/analytics.js" async></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f9f9f9;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        input, button {
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        button {
+            background: #27ae60;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #219653;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e9;
+            border-left: 4px solid #27ae60;
+            border-radius: 6px;
+            font-size: 18px;
+        }
+        .person {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .person input {
+            margin-bottom: 0;
+        }
+        .add-more {
+            background: #3498db;
+            color: white;
+            font-size: 14px;
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .add-more:hover {
+            background: #2980b9;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        .note {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Group Bill Split Calculator</h1>
+        <p>Split any bill fairly among friends, roommates, or family. Just enter names and how much each person paid.</p>
+
+        <div class="form-group">
+            <label>Total Bill Amount (₹/$/£):</label>
+            <input type="number" id="totalBill" placeholder="Enter total bill amount" step="0.01">
+        </div>
+
+        <div id="peopleList">
+            <div class="person">
+                <input type="text" placeholder="Name" class="name">
+                <input type="number" placeholder="Amount Paid" class="paid" step="0.01">
+            </div>
+        </div>
+
+        <div class="add-more" onclick="addPerson()">+ Add Another Person</div>
+
+        <button onclick="calculateSplit()">Calculate Fair Share</button>
+
+        <div id="result" class="result" style="display: none;"></div>
+
+        <p class="note">
+            This tool calculates who owes whom to make the split fair. Perfect for trips, dinners, or shared expenses.
+        </p>
+    </div>
+
+    <footer>
+        <p>© 2025 <a href="https://smartcalcs.in">SmartCalcs.in</a> – Free Online Calculators for Everyone.</p>
+        <p><a href="https://smartcalcs.in">Back to Home</a></p>
+    </footer>
+
+    <script>
+        function addPerson() {
+            const container = document.getElementById('peopleList');
+            const newPerson = document.createElement('div');
+            newPerson.className = 'person';
+            newPerson.innerHTML = `
+                <input type="text" placeholder="Name" class="name">
+                <input type="number" placeholder="Amount Paid" class="paid" step="0.01">
+            `;
+            container.appendChild(newPerson);
+        }
+
+        function calculateSplit() {
+            const totalBill = parseFloat(document.getElementById('totalBill').value);
+            const people = document.querySelectorAll('.person');
+            const resultDiv = document.getElementById('result');
+
+            if (isNaN(totalBill) || totalBill <= 0) {
+                resultDiv.innerHTML = "Please enter a valid total bill amount.";
+                resultDiv.style.display = 'block';
+                return;
+            }
+
+            let names = [];
+            let paid = [];
+            let totalPaid = 0;
+
+            people.forEach(person => {
+                const name = person.querySelector('.name').value.trim();
+                const amount = parseFloat(person.querySelector('.paid').value) || 0;
+                if (name) {
+                    names.push(name);
+                    paid.push(amount);
+                    totalPaid += amount;
+                }
+            });
+
+            if (names.length === 0) {
+                resultDiv.innerHTML = "Please add at least one person.";
+                resultDiv.style.display = 'block';
+                return;
+            }
+
+            const fairShare = totalBill / names.length;
+            let result = <strong>Each person should pay: ${totalBill.toFixed(2)}</strong><br><br>;
+
+            // Calculate who owes whom
+            let debts = [];
+            for (let i = 0; i < names.length; i++) {
+                const diff = paid[i] - fairShare;
+                if (Math.abs(diff) > 0.01) {
+                    debts.push({ name: names[i], amount: diff });
+                }
+            }
+
+            // Settle debts
+            let settlement = [];
+            for (let i = 0; i < debts.length; i++) {
+                for (let j = i + 1; j < debts.length; j++) {
+                    if (debts[i].amount < 0 && debts[j].amount > 0) {
+                        const transfer = Math.min(-debts[i].amount, debts[j].amount);
+                        if (transfer > 0.01) {
+                            settlement.push(${debts[i].name} should pay ₹${transfer.toFixed(2)} to ${debts[j].name});
+                            debts[i].amount += transfer;
+                            debts[j].amount -= transfer;
+                        }
+                    }
+                }
+            }
+
+            if (settlement.length === 0) {
+                result += "✅ Everyone has paid fairly!";
+            } else {
+                result += settlement.join("<br>");
+            }
+
+            resultDiv.innerHTML = result;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+
+    <!-- Structured Data for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Group Bill Split Calculator",
+      "description": "A free online tool to split bills fairly among friends, roommates, or family.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "SmartCalcs",
+        "url": "https://smartcalcs.in"
+      },
+      "url": "https://smartcalcs.in/split-bill-calculator.html"
+    }
+    </script>
+</body>
+</html>
