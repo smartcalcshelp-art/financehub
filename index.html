@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Group Bill Split Calculator - No Ads | SmartCalcs</title>
-    <meta name="description" content="Split bills easily with friends, roommates, or family. Free online tool to divide expenses fairly. No login, no ads, works on mobile.">
-    <meta name="keywords" content="split bill calculator, expense split tool, group bill calculator, fair share calculator, SmartCalcs">
+    <title>Group Bill Split Calculator - Fair Expense Sharing | SmartCalcs</title>
+    <meta name="description" content="Split group bills fairly with friends or roommates. Free, ad-free online tool to calculate who owes whom. No login, mobile-friendly.">
+    <meta name="keywords" content="split bill calculator, expense split, group bill, fair share, SmartCalcs">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://smartcalcs.in/split-bill-calculator.html">
     
     <!-- Open Graph / Social Sharing -->
     <meta property="og:title" content="Free Group Bill Split Calculator - No Ads | SmartCalcs">
-    <meta property="og:description" content="Split bills easily with friends, roommates, or family. Free online tool to divide expenses fairly.">
+    <meta property="og:description" content="Split bills fairly with friends and family. No login, no ads. Works on mobile.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://smartcalcs.in/split-bill-calculator.html">
     <meta property="og:image" content="https://smartcalcs.in/assets/og-split-bill.jpg">
@@ -25,163 +25,282 @@
     <!-- Favicon -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-    <!-- Preload Critical Assets -->
-    <link rel="preload" href="/css/style.css" as="style">
-    <link rel="preload" href="/js/analytics.js" as="script">
-
     <!-- Google Analytics -->
     <script src="/js/analytics.js" async></script>
 
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
+            background: #f4f6f9;
+            padding: 20px;
+        }
+
+        .container {
             max-width: 900px;
             margin: 40px auto;
-            padding: 20px;
-            background: #f9f9f9;
-        }
-        h1, h2, h3 {
-            color: #2c3e50;
-        }
-        .container {
             background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        header {
+            background: #27ae60;
+            color: white;
             padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
         }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-top: 8px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
         .form-group {
-            margin: 20px 0;
+            margin-bottom: 20px;
         }
+
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
+            color: #2c3e50;
         }
-        input, button {
-            padding: 12px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+
+        input[type="text"], 
+        input[type="number"] {
             width: 100%;
-            margin-bottom: 10px;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
         }
-        button {
-            background: #27ae60;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
+
+        input[type="text"]:focus, 
+        input[type="number"]:focus {
+            border-color: #27ae60;
+            outline: none;
         }
-        button:hover {
-            background: #219653;
-        }
-        .result {
-            margin-top: 20px;
-            padding: 15px;
-            background: #e8f5e9;
-            border-left: 4px solid #27ae60;
-            border-radius: 6px;
-            font-size: 18px;
-        }
+
         .person {
             display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 12px;
+            margin-bottom: 12px;
+            align-items: center;
         }
+
         .person input {
             margin-bottom: 0;
         }
+
+        .person input[type="text"] {
+            flex: 1;
+        }
+
+        .person input[type="number"] {
+            flex: 1;
+        }
+
+        .remove-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .add-more {
             background: #3498db;
             color: white;
-            font-size: 14px;
-            padding: 8px;
-            border-radius: 6px;
-            text-align: center;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
         }
+
         .add-more:hover {
             background: #2980b9;
         }
+
+        button.calculate {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        button.calculate:hover {
+            background: #219653;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f5e9;
+            border-left: 5px solid #27ae60;
+            border-radius: 8px;
+            font-size: 18px;
+            line-height: 2;
+            color: #2c3e50;
+        }
+
+        .result strong {
+            color: #275b3a;
+        }
+
+        .result ul {
+            list-style: disc;
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
         footer {
             text-align: center;
-            margin-top: 40px;
+            padding: 20px;
             color: #7f8c8d;
             font-size: 14px;
+            background: #ecf0f1;
+            border-top: 1px solid #ddd;
         }
+
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
         .note {
             font-size: 14px;
             color: #7f8c8d;
             margin-top: 20px;
+            text-align: center;
             font-style: italic;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Group Bill Split Calculator</h1>
-        <p>Split any bill fairly among friends, roommates, or family. Just enter names and how much each person paid.</p>
+        <header>
+            <h1>Group Bill Split Calculator</h1>
+            <p>Split bills fairly among friends, roommates, or family — no math needed!</p>
+        </header>
 
-        <div class="form-group">
-            <label>Total Bill Amount (₹/$/£):</label>
-            <input type="number" id="totalBill" placeholder="Enter total bill amount" step="0.01">
-        </div>
-
-        <div id="peopleList">
-            <div class="person">
-                <input type="text" placeholder="Name" class="name">
-                <input type="number" placeholder="Amount Paid" class="paid" step="0.01">
+        <div class="content">
+            <div class="form-group">
+                <label>Total Bill Amount (₹/$/£):</label>
+                <input type="number" id="totalBill" placeholder="Enter total bill amount" step="0.01">
             </div>
+
+            <div id="peopleList">
+                <!-- Default Person -->
+                <div class="person">
+                    <input type="text" placeholder="Name" class="name">
+                    <input type="number" placeholder="Amount Paid" class="paid" step="0.01">
+                </div>
+            </div>
+
+            <button class="add-more" onclick="addPerson()">
+                <span>+</span> Add Another Person
+            </button>
+
+            <button class="calculate" onclick="calculateSplit()">Calculate Fair Share</button>
+
+            <div id="result" class="result" style="display: none;"></div>
+
+            <p class="note">
+                This tool calculates who owes whom to make the split fair. Perfect for trips, dinners, or shared expenses.
+            </p>
         </div>
 
-        <div class="add-more" onclick="addPerson()">+ Add Another Person</div>
-
-        <button onclick="calculateSplit()">Calculate Fair Share</button>
-
-        <div id="result" class="result" style="display: none;"></div>
-
-        <p class="note">
-            This tool calculates who owes whom to make the split fair. Perfect for trips, dinners, or shared expenses.
-        </p>
+        <footer>
+            <p>© 2025 <a href="https://smartcalcs.in">SmartCalcs.in</a> – Free Online Calculators for Everyone.</p>
+            <p><a href="https://smartcalcs.in">Back to Home</a></p>
+        </footer>
     </div>
 
-    <footer>
-        <p>© 2025 <a href="https://smartcalcs.in">SmartCalcs.in</a> – Free Online Calculators for Everyone.</p>
-        <p><a href="https://smartcalcs.in">Back to Home</a></p>
-    </footer>
-
     <script>
+        // Add a new person field
         function addPerson() {
             const container = document.getElementById('peopleList');
             const newPerson = document.createElement('div');
             newPerson.className = 'person';
+
             newPerson.innerHTML = `
                 <input type="text" placeholder="Name" class="name">
                 <input type="number" placeholder="Amount Paid" class="paid" step="0.01">
+                <button type="button" class="remove-btn" onclick="removePerson(this)">✕</button>
             `;
+
             container.appendChild(newPerson);
         }
 
+        // Remove a person field
+        function removePerson(button) {
+            const person = button.parentElement;
+            if (document.querySelectorAll('.person').length > 1) {
+                person.remove();
+            } else {
+                alert("You need at least one person!");
+            }
+        }
+
+        // Calculate the fair split
         function calculateSplit() {
             const totalBill = parseFloat(document.getElementById('totalBill').value);
-            const people = document.querySelectorAll('.person');
-            const resultDiv = document.getElementById('result');
 
             if (isNaN(totalBill) || totalBill <= 0) {
-                resultDiv.innerHTML = "Please enter a valid total bill amount.";
-                resultDiv.style.display = 'block';
+                alert("Please enter a valid total bill amount.");
                 return;
             }
 
+            const people = document.querySelectorAll('.person');
             let names = [];
             let paid = [];
             let totalPaid = 0;
 
             people.forEach(person => {
-                const name = person.querySelector('.name').value.trim();
-                const amount = parseFloat(person.querySelector('.paid').value) || 0;
+                const nameInput = person.querySelector('.name');
+                const paidInput = person.querySelector('.paid');
+
+                const name = nameInput.value.trim();
+                const amount = parseFloat(paidInput.value) || 0;
+
                 if (name) {
                     names.push(name);
                     paid.push(amount);
@@ -190,15 +309,15 @@
             });
 
             if (names.length === 0) {
-                resultDiv.innerHTML = "Please add at least one person.";
-                resultDiv.style.display = 'block';
+                alert("Please add at least one person with a name.");
                 return;
             }
 
             const fairShare = totalBill / names.length;
-            let result = <strong>Each person should pay: ${totalBill.toFixed(2)}</strong><br><br>;
+            const resultDiv = document.getElementById('result');
+            let resultHTML = <strong>Each person should pay: ₹${fairShare.toFixed(2)}</strong><br><br>;
 
-            // Calculate who owes whom
+            // Create list of debts
             let debts = [];
             for (let i = 0; i < names.length; i++) {
                 const diff = paid[i] - fairShare;
@@ -207,28 +326,33 @@
                 }
             }
 
-            // Settle debts
-            let settlement = [];
+            // Settle debts: who owes whom
+            let settlements = [];
             for (let i = 0; i < debts.length; i++) {
-                for (let j = i + 1; j < debts.length; j++) {
-                    if (debts[i].amount < 0 && debts[j].amount > 0) {
-                        const transfer = Math.min(-debts[i].amount, debts[j].amount);
-                        if (transfer > 0.01) {
-                            settlement.push(${debts[i].name} should pay ₹${transfer.toFixed(2)} to ${debts[j].name});
-                            debts[i].amount += transfer;
-                            debts[j].amount -= transfer;
-                        }
+                if (debts[i].amount >= 0) continue; // Skip those who are owed
+                for (let j = 0; j < debts.length; j++) {
+                    if (debts[j].amount <= 0) continue; // Skip those who owe
+
+                    const transfer = Math.min(-debts[i].amount, debts[j].amount);
+                    if (transfer > 0.01) {
+                        settlements.push(${debts[i].name} should pay ₹${transfer.toFixed(2)} to ${debts[j].name});
+                        debts[i].amount += transfer;
+                        debts[j].amount -= transfer;
                     }
                 }
             }
 
-            if (settlement.length === 0) {
-                result += "✅ Everyone has paid fairly!";
+            if (settlements.length === 0) {
+                resultHTML += "✅ Everyone has paid fairly!";
             } else {
-                result += settlement.join("<br>");
+                resultHTML += "<strong>Settlements:</strong><ul>";
+                settlements.forEach(s => {
+                    resultHTML += <li>${s}</li>;
+                });
+                resultHTML += "</ul>";
             }
 
-            resultDiv.innerHTML = result;
+            resultDiv.innerHTML = resultHTML;
             resultDiv.style.display = 'block';
         }
     </script>
